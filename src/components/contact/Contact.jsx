@@ -1,10 +1,29 @@
-import React from 'react';
+import React, { useRef, useState }  from 'react';
 import './Contact.css';
 import Phone from '../../images/phone.png';
 import Email from '../../images/email.png';
 import Address from '../../images/address.png';
+import emailjs from '@emailjs/browser';
 
 const Contact = () => {
+
+    const formRef = useRef();
+
+    const [done, setDone] = useState(false);
+
+    const handleSubmit = (e) => {
+        //to prevent page refresh
+        e.preventDefault();
+
+        emailjs.sendForm('service_wlptfyn', 'template_ucgaxa7', formRef.current, 'xsSAnH1tvqnJu-W6g')
+        .then((result) => {
+            console.log(result.text);
+            setDone(true);
+        }, (error) => {
+            console.log(error.text);
+        });
+    };
+
     return (
         <div className='c'>
             <div className='c-bg'></div>
@@ -30,12 +49,13 @@ const Contact = () => {
                     <p className='c-desc'>
                         <b>What's your story?</b> Get in touch. Always ready to develop a solution when a new project comes along.
                     </p>  
-                    <form>
+                    <form ref={formRef} onSubmit={handleSubmit}>
                         <input type='text' placeholder='Name' name='user_name' /> 
                         <input type='text' placeholder='Subject' name='user_subject' /> 
                         <input type='text' placeholder='Email' name='user_email' /> 
                         <textarea rows='5' placeholder='Message' name='message' />   
                         <button>Submit</button>
+                        {done && "Thank you for reaching out to me. Will respond to you soonest!"}
                     </form>  
                 </div>
             </div>
