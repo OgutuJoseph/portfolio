@@ -1,4 +1,4 @@
-# Project URL:
+# Project URL
 https://ogutujoseph-portfolio.netlify.app/
 
 
